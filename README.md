@@ -72,7 +72,7 @@ Due to the lack of public metro data, a synthetic dataset was generated. You can
 
 - [facebook/bart-large-mnli – Hugging Face](https://huggingface.co/facebook/bart-large-mnli)
 - [Keras LSTM Documentation](https://keras.io/api/layers/recurrent_layers/lstm/)
-- [Riyadh Metro](https://www.riyadhmetro.sa/darb)
+- [Riyadh Metro Stations](https://rpt.sa/en/web/guest/routedetails?dir=H)
 
 ---
 
