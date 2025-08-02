@@ -22,8 +22,8 @@ The goal is to enhance urban mobility and support smart city initiatives by givi
 ##  Project Files
 
 - `Insiyab_Report.pdf`: Full academic report 
-- `Project_APP_Insiyab (1).ipynb`: Jupyter Notebook with code (NLP + LSTM integration)
-- `synthetic_dataset.csv`: The dataset generated using ChatGPT’s tools to simulate realistic scenarios
+- `Project_APP_Insiyab(1).ipynb`: Jupyter Notebook with code (NLP + LSTM integration)
+- `Riyadh_Metro_Synthetic_10k.csv`: The dataset generated using ChatGPT’s tools to simulate realistic scenarios
 
 ---
 
