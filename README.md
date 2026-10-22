@@ -1,5 +1,9 @@
 # Insiyab
 
+<p><img src="https://skillicons.dev/icons?i=py,tensorflow,sklearn&theme=dark" alt="Python · TensorFlow · scikit-learn · NLP · LSTM · Gradio" height="34" /></p>
+<sub>Python · TensorFlow · scikit-learn · NLP · LSTM · Gradio</sub>
+
+
 **Natural-language metro congestion estimation — Riyadh**
 
 Insiyab explores a conversational interface for asking about metro crowding. A user enters a question such as *“Is Al Batha crowded on Monday at 8 AM?”*; the workflow extracts station and time information and returns a predicted congestion category through Gradio.
