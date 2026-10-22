@@ -1,83 +1,57 @@
-# Insiyab – Metro Congestion Prediction System
+# Insiyab
+**Riyadh Metro congestion classification prototype** · Academic AI project
 
-**Insiyab** is a smart AI-powered application that forecasts metro station crowding levels based on natural language queries. The project combines two powerful AI techniques:  
-- A deep learning model (LSTM) trained on structured transit data  
-- A pretrained NLP model (facebook/bart-large-mnli) for extracting trip details from plain English text  
+Insiyab explores a natural-language interface for estimating station congestion levels. A user asks a question such as *"Is Al Batha crowded on Monday at 8 AM?"*; the prototype extracts trip details and maps them to a machine-learning classifier.
 
-The goal is to enhance urban mobility and support smart city initiatives by giving commuters real-time insights into metro congestion.
+> **Important:** This is a demonstration trained on **synthetic metro data**, not live Riyadh Metro measurements. Predictions must not be interpreted as real transit conditions.
 
----
+## Architecture
 
-##  Features
+```text
+User question
+     |
+     v
+Trip-detail extraction (BART zero-shot + rules)
+     |
+     v
+Station / weekday / time encodings
+     |
+     v
+Classifier (LSTM-based notebook prototype)
+     |
+     v
+Low / medium / high congestion (Gradio)
+```
 
-- Accepts natural language input like:  
-  _"Is Al Batha crowded on Monday at 8 AM?"_
-- Converts text into structured data (station, day, time)
-- Predicts crowd level: 🟢 Low, 🟡 Medium, 🔴 High
-- Visual, user-friendly Gradio interface
-- Built with synthetic data to simulate Riyadh Metro conditions
+## Repository contents
 
----
+| File | Description |
+| --- | --- |
+| [Prototype notebook](./Project_APP_Insiyab%20(1).ipynb) | Data exploration, model training, and Gradio integration |
+| [Synthetic dataset](./Riyadh_Metro_Synthetic_10k.csv) | 10,000 simulated records used for the exercise |
+| [Project report](./Insiyab_Report.pdf) | Coursework write-up |
 
-##  Project Files
+**Stack:** Python · pandas · scikit-learn · TensorFlow/Keras · Hugging Face Transformers · Gradio
 
-- `Insiyab_Report.pdf`: Full academic report 
-- `Project_APP_Insiyab(1).ipynb`: Jupyter Notebook with code (NLP + LSTM integration)
-- `Riyadh_Metro_Synthetic_10k.csv`: The dataset generated using ChatGPT’s tools to simulate realistic scenarios
+## Evaluation: important limitations
 
----
+The original coursework report/README quoted approximately **95% accuracy**. Treat that as a **historical classroom result, not a validated generalization estimate**, because the notebook currently:
 
-##  Tech Stack
+1. Fits a numerical scaler on the full dataset **before** splitting into training and test sets.
+2. Uses the test split as `validation_data` during model training.
+3. Feeds the LSTM a sequence length of **one timestep**, limiting its ability to model temporal sequences.
+4. Trains entirely on simulated data.
 
-- Python 3.10
-- Gradio for UI
-- Hugging Face Transformers (`facebook/bart-large-mnli`)
-- TensorFlow/Keras (LSTM)
-- Scikit-learn (evaluation metrics)
+A reliable new metric requires revising the experiment and rerunning it with a train-only preprocessing pipeline, separate validation/test splits, and suitable baseline models. No new performance result is claimed here.
 
----
+## Running the prototype
 
-##  Model Performance
+The notebook was authored for Google Colab and expects the dataset at `/content/Riyadh_Metro_Synthetic_10k.csv`. It saves model and preprocessing artifacts during execution and loads them for Gradio inference later. Those generated artifacts are **not included** in this repository.
 
-- **Accuracy**: 95% on test set  
-- **Precision/Recall/F1**:
-  - 🟢 Low: 0.94 / 1.00 / 0.97
-  - 🟡 Medium: 0.92 / 1.00 / 0.96
-  - 🔴 High: 1.00 / 0.84 / 0.91
+## Engineering upgrade plan
 
----
-
-##  Future Work
-
-- Integrate with live metro APIs
-- Add voice input support
-- Improve recall for high congestion class
-- Deploy as a mobile/web app
-
----
-
-##  Dataset
-
-Due to the lack of public metro data, a synthetic dataset was generated. You can find the `.csv` file included in this repo. It contains fields such as:
-- Route ID
-- Stations
-- Hour, Day
-- Peak Hour flag
-- Passenger demand
-- Congestion Level (target)
-
----
-
-##  References
-
-- [facebook/bart-large-mnli – Hugging Face](https://huggingface.co/facebook/bart-large-mnli)
-- [Keras LSTM Documentation](https://keras.io/api/layers/recurrent_layers/lstm/)
-- [Riyadh Metro Stations](https://rpt.sa/en/web/guest/routedetails?dir=H)
-
----
-
-### 📌 Disclaimer
-
-This is a university AI application project using synthetic data for research and prototyping purposes only.
-
-
+- Rebuild preprocessing as a leakage-safe scikit-learn pipeline.
+- Compare appropriate tabular baselines against the LSTM approach.
+- Introduce time-aware validation **if** a genuine temporal dataset becomes available.
+- Package reusable inference code, tests, and a small API.
+- Clearly distinguish simulated predictions from any future real-world integration.
